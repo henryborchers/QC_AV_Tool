@@ -11,9 +11,10 @@
 class AV_Item {
 public:
     enum MediaType {
-        AUDIO,
-        VIDEO,
-        OTHER
+        UNKNOWN_TYPE    = 0,
+        AUDIO           = 1,
+        VIDEO           = 2,
+        OTHER           = 3
     };
 
     enum ItemProgress {
@@ -24,7 +25,7 @@ public:
     };
 
     enum QCStatus {
-        UNKNOWN,
+        UNKNOWN_STATUS,
         PASS,
         FAIL
     };

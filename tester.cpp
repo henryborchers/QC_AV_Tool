@@ -11,9 +11,10 @@
 
 
 int main(){
-    std::puts("testing AV_item()");
+    std::puts("\nTesting VideoObject ()");
 //    AV_Item dummy("D:\\media\\tv\\15.mp4");
     VideoObject video("D:\\media\\tv\\15.mp4");
+    std::puts("\nTesting AudioObject ()");
     AudioObject audio("D:\\Users\\Henry\\Documents\\workspace\\qt\\QC_machine\\03 Stranger.mp3");
 
 

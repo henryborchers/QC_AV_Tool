@@ -2,8 +2,8 @@
 // Created by Henry on 5/26/2015.
 //
 
-#ifndef QC_TESTER_AUDIOOBJECT_H
-#define QC_TESTER_AUDIOOBJECT_H
+#ifndef AUDIOOBJECT_H
+#define AUDIOOBJECT_H
 
 #include <string>
 #include "AV_Item.h"
@@ -21,4 +21,4 @@ protected:
 };
 
 
-#endif //QC_TESTER_AUDIOOBJECT_H
+#endif //AUDIOOBJECT_H
