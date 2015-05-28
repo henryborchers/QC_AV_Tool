@@ -12,7 +12,8 @@
 class VideoObject : public AudioObject {
 public:
     VideoObject(const std::string &filename);
-    std::string getVideoCodec();
+    const std::string &getVideoCodec();
+    const std::string &getColorSpace();
 private:
     std::string videoCodec;
     std::string colorSpace;
