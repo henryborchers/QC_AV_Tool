@@ -10,7 +10,12 @@
 
 class AudioObject : public AV_Item {
 public:
-    AudioObject(const std::string &filename, AV_Item::MediaType type=AV_Item::AUDIO);
+    AudioObject(const std::string &filename, AV_Item::MediaType = AUDIO);
+    int getAudioBitRate();
+    int getAudioBitDepth();
+    int getAudioSampleRate();
+    const std::string &getAudioCodec();
+    int getAudioChannels();
 
 protected:
     int audioBitRate;

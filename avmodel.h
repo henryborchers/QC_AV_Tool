@@ -2,6 +2,7 @@
 #define AVMODEL_H
 #include <QAbstractTableModel>
 #include <QString>
+#include "AV_Item.h"
 const int ROWS    = 1;
 const int COLUMNS = 4;
 struct RowData {
@@ -32,9 +33,10 @@ private:
     enum columnNames {fileName = 0,
                       fileSize = 1,
                       fileType = 2,
-                      foo      = 3};
+                      duration = 3};
 //    QVector<QVariantList*> m_files;
-    QVector<RowData> m_files;
+//    QVector<RowData> m_files;
+    QVector<AV_Item*> m_files;
     QVariantList newRow;
     QString m_data[ROWS][COLUMNS];
 };

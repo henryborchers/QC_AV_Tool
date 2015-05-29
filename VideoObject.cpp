@@ -15,7 +15,7 @@ VideoObject::VideoObject(const std::string &filename): AudioObject(filename, VID
     this->chromaSubsampling = vMi.Get(Stream_Video, 0, __T("ChromaSubsampling"), Info_Text, Info_Name);
     this->videoBitRate = (int)std::stoi(vMi.Get(Stream_Video, 0, __T("BitRate"), Info_Text, Info_Name));
     this->videoColorDepth = (int)std::stoi(vMi.Get(Stream_Video, 0, __T("BitDepth"), Info_Text, Info_Name));
-    this->frameRate = (int)std::stoi(vMi.Get(Stream_Video, 0, __T("FrameRate"), Info_Text, Info_Name));
+    this->frameRate = (float)std::stof(vMi.Get(Stream_Video, 0, __T("FrameRate"), Info_Text, Info_Name));
     this->resolutionX = (int)std::stoi(vMi.Get(Stream_Video, 0, __T("Width"), Info_Text, Info_Name));
     this->resolutionY = (int)std::stoi(vMi.Get(Stream_Video, 0, __T("Height"), Info_Text, Info_Name));
     if(vMi.Get(Stream_Video, 0, __T("ScanType"), Info_Text, Info_Name) == "Progressive"){

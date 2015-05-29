@@ -17,14 +17,20 @@ SOURCES += main.cpp\
     treeitem.cpp \
     treemodel.cpp \
     filetreemodel.cpp \
-    avmodel.cpp
+    avmodel.cpp \
+    AudioObject.cpp \
+    VideoObject.cpp \
+    AV_Item.cpp
 
 HEADERS  += mainwindow.h \
     treeitem.h \
     treemodel.h \
     filetreemodel.h \
     avmodel.h \
-    MediaInfoDLL.h
+    MediaInfoDLL.h \
+    AudioObject.h \
+    VideoObject.h \
+    AV_Item.h
 
 FORMS    += mainwindow.ui
 CONFIG += c++11

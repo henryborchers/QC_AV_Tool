@@ -41,7 +41,7 @@ public:
     unsigned int getFileSize();
     AV_Item::MediaType getFormat();
     int getDuration();
-    const std::string getDurationString();
+    const std::string &getDurationString();
 
     AV_Item::ItemProgress getProgress();
     void setProgress(AV_Item::QCStatus status);

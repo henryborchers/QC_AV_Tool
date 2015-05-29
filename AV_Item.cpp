@@ -30,3 +30,7 @@ AV_Item::AV_Item(const std::string filename, AV_Item::MediaType type): fileName(
 const std::string &AV_Item::getFileName() {
     return this->fileName;
 }
+
+const std::string &AV_Item::getDurationString() {
+    return this->durationString;
+}

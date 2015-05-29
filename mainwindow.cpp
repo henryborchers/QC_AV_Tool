@@ -71,3 +71,8 @@ void MainWindow::loadTestFiles()
     }
 
 }
+
+void MainWindow::on_actionAbout_triggered()
+{
+    qDebug() << "Loading about menu";
+}

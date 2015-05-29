@@ -20,11 +20,12 @@ private:
     std::string chromaSubsampling;
     int videoBitRate;
     int videoColorDepth;
-    int frameRate;
+    float frameRate;
     int resolutionX;
     int resolutionY;
     bool progressive;
     bool videoCodecLossy;
+    bool hasAudio;
 };
 
 
