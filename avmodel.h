@@ -29,11 +29,14 @@ public:
 private:
 
     int row_size = 1;
-    int column_size = 4;
-    enum columnNames {fileName = 0,
-                      fileSize = 1,
-                      fileType = 2,
-                      duration = 3};
+    int column_size = 7;
+    enum columnNames {  fileName        = 0,
+                        fileSize        = 1,
+                        mediaType       = 2,
+                        containerType   = 3,
+                        duration        = 4,
+                        audioCodec      = 5,
+                        videoCodec      = 6,};
 //    QVector<QVariantList*> m_files;
 //    QVector<RowData> m_files;
     QVector<AV_Item*> m_files;

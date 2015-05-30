@@ -65,14 +65,24 @@ QVariant AVModel::data(const QModelIndex &index, int role) const
 //            return m_files[row_index]->getFileSize();
 //            return m_files[row_index].fileSize;
 //            return m_data[row_index][AVModel::fileSize];
-            case AVModel::fileType:
-            return "-";
+            case AVModel::mediaType:
+                return m_files[row_index]->getMediaTypeString();
+            case AVModel::containerType:
+                return "-";
+//            return "-";
 //            return m_files[row_index].fileType;
 //            return m_data[row_index][AVModel::fileType];
         case AVModel::duration:
             return m_files[row_index]->getDurationString().c_str();
-//            QString foo = m_data[0][1];
-                break;
+        case AVModel::audioCodec:
+            return m_files[row_index]->getAudioCodec().c_str();
+        case AVModel::videoCodec:
+            if(m_files[row_index]->getMediaType()==AV_Item::MediaType::VIDEO){
+                return m_files[row_index]->getVideoCodec().c_str();
+            } else {
+                return "-";
+            }
+
         }
 
 
@@ -93,10 +103,17 @@ QVariant AVModel::headerData(int section, Qt::Orientation orientation, int role)
                 return QString("File Name");
             case AVModel::fileSize:
                 return QString("File Size");
-            case AVModel::fileType:
-                return QString("Files type");
+            case AVModel::mediaType:
+                return QString("Media Type");
             case AVModel::duration:
                 return QString("Duration");
+            case AVModel::audioCodec:
+                return QString("Audio Codec");
+            case AVModel::videoCodec:
+                return QString("Video Codec");
+            case AVModel::containerType:
+                return QString("Container Type");
+
             }
 
         }
@@ -143,44 +160,16 @@ bool AVModel::addFile(const QString &fileName)
 
         VideoObject *newRow = new VideoObject(fileName.toStdString());
         this->m_files.append(newRow);
-    } else {
-
-
+        this->insertRows(this->rowCount(),1);
     }
 //    this->m_files.append(newRow);
-    this->insertRows(this->rowCount(),1);
-
-//bool AVModel::addFile(const QString &fileName)
-//{
-//    using namespace MediaInfoDLL;
-//    RowData newRow;
-//    QFileInfo checkFile(fileName);
-//    if (checkFile.exists()) {
-//        MediaInfo Mi;
-//        Mi.Open(fileName.toStdString());
-//        if(Mi.IsReady()){
-//            qDebug() << fileName;
-//            newRow.fileName = fileName;
-//            newRow.fileSize = (unsigned int) std::stoi(Mi.Get(Stream_General, 0, __T("FileSize"), Info_Text, Info_Name));
-//            newRow.fileType = Mi.Get(Stream_General, 0, __T("Format"), MediaInfoDLL::Info_Text, MediaInfoDLL::Info_Name).c_str();
-//        }
-//
-//        Mi.Close();
-//    } else {
-//        newRow.fileName = "UNDEFINED";
-//        newRow.fileSize = 0;
-//        newRow.fileType = "None";
-//
-//    }
-//    this->m_files.append(newRow);
-//    this->insertRows(this->rowCount(),1);
 }
+
 bool AVModel::removeFile(int row)
 {
 //    if(m_files.size() > 0){
 //        this->m_files.pop_back();
         this->removeRows(this->rowCount()-1, 1);
     return true;
-//    }
 }
 

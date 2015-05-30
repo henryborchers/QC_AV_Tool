@@ -11,13 +11,12 @@
 class AV_Item {
 public:
     enum MediaType {
-        UNKNOWN_TYPE    = 0,
-        AUDIO           = 1,
-        VIDEO           = 2,
-        OTHER           = 3
+        UNKNOWN_TYPE,
+        AUDIO,
+        VIDEO,
+        OTHER
     };
-
-    enum ItemProgress {
+        enum ItemProgress {
         TO_BE_CHECKED,
         CHECKING,
         COMPLETED,
@@ -29,6 +28,13 @@ public:
         PASS,
         FAIL
     };
+    
+    enum QCPriority {
+        LOW_PRIORITY    = 0,
+        NORMAL_PRIORITY = 1,
+        HIGH_PRIORITY   = 2
+    };
+    
     struct TimeBasedNote {
         unsigned int startTime;
         unsigned int endTime;
@@ -39,34 +45,40 @@ public:
 
     const std::string &getFileName();
     unsigned int getFileSize();
-    AV_Item::MediaType getFormat();
+    AV_Item::MediaType getMediaType();
     int getDuration();
     const std::string &getDurationString();
+    const char *getMediaTypeString();
 
     AV_Item::ItemProgress getProgress();
     void setProgress(AV_Item::QCStatus status);
 
-    AV_Item::QCStatus *getQCStatus();
+    AV_Item::QCStatus getQCStatus();
     void setQCStatus(AV_Item::QCStatus status);
 
+    AV_Item::QCPriority getPriority();
+    void setPriority(AV_Item::QCPriority newPriority);
+
     const std::string &getNotes();
-    void setGeneral_QCnotes(const std::string *text);
+    void setGeneral_QCNotes(const std::string *text);
     void addTimeBasedNote(const TimeBasedNote *note);
     const std::vector<TimeBasedNote> &getTimeBasedNotes();
-
+    virtual const std::string &getAudioCodec()=0;
+    virtual const std::string &getVideoCodec(){};
 
 protected:
     const std::string   fileName;
+private:
     unsigned int        fileSize;
-    AV_Item::MediaType  format;
+    AV_Item::MediaType  mediaType;
     int                 duration;
     std::string         durationString;
 
-    std::string                    general_QCNotes;
-    AV_Item::ItemProgress          QC_status;
-    AV_Item::QCStatus              item_status;
-    std::vector<TimeBasedNote>     TimeBasedNotes;
-
+    std::string                     general_QCNotes;
+    AV_Item::ItemProgress           QC_status;
+    AV_Item::QCStatus               item_status;
+    std::vector<TimeBasedNote>      TimeBasedNotes;
+    QCPriority priority;
 };
 
 

@@ -5,7 +5,9 @@
 #include "AV_Item.h"
 #include "MediaInfoDLL.h"
 
-AV_Item::AV_Item(const std::string filename, AV_Item::MediaType type): fileName(filename), format(type){
+AV_Item::AV_Item(const std::string filename, AV_Item::MediaType type)
+        : fileName(filename),
+          mediaType(type){
 
     using namespace MediaInfoDLL;
 
@@ -24,7 +26,8 @@ AV_Item::AV_Item(const std::string filename, AV_Item::MediaType type): fileName(
 
 
 
-    std::printf("filename: %s\nduration: %d, %s\nfileSize: %d\nFormat: %d\n", fileName.c_str(), duration, durationString.c_str(), fileSize, format);
+    std::printf("filename: %s\nduration: %d, %s\nfileSize: %d\nFormat: %d\n", fileName.c_str(), duration, durationString.c_str(), fileSize,
+                mediaType);
 }
 
 const std::string &AV_Item::getFileName() {
@@ -33,4 +36,28 @@ const std::string &AV_Item::getFileName() {
 
 const std::string &AV_Item::getDurationString() {
     return this->durationString;
+}
+
+const char *AV_Item::getMediaTypeString() {
+
+    switch(this->mediaType){
+        case UNKNOWN_TYPE:
+            return "Unknown type";
+
+        case AUDIO:
+            return "Audio";
+
+        case VIDEO:
+            return "Video";
+
+        case OTHER:
+            return "Other";
+
+        default:
+            return "Error";
+    }
+}
+
+AV_Item::MediaType AV_Item::getMediaType() {
+    return this->mediaType;
 }

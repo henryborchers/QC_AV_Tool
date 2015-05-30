@@ -18,6 +18,7 @@ public:
     int getAudioChannels();
 
 protected:
+    virtual const std::string &getVideoCodec(){};
     int audioBitRate;
     int audioBitDepth;
     int audioSampleRate;
