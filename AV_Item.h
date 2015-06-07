@@ -16,17 +16,17 @@ public:
         VIDEO,
         OTHER
     };
-        enum ItemProgress {
+    enum ProgressStatus {
         TO_BE_CHECKED,
         CHECKING,
         COMPLETED,
         DEFERRED
     };
 
-    enum QCStatus {
-        UNKNOWN_STATUS,
-        PASS,
-        FAIL
+    enum QualityValue {
+        UNKNOWN_QUALITY     = 0,
+        PASS                = 1,
+        FAIL                = 2
     };
     
     enum QCPriority {
@@ -50,11 +50,11 @@ public:
     const std::string &getDurationString();
     const char *getMediaTypeString();
 
-    AV_Item::ItemProgress getProgress();
-    void setProgress(AV_Item::QCStatus status);
+    AV_Item::ProgressStatus getProgress();
+    void setProgress(AV_Item::ProgressStatus value);
 
-    AV_Item::QCStatus getQCStatus();
-    void setQCStatus(AV_Item::QCStatus status);
+    AV_Item::QualityValue getQuality();
+    void setQuality(AV_Item::QualityValue value);
 
     AV_Item::QCPriority getPriority();
     void setPriority(AV_Item::QCPriority newPriority);
@@ -64,7 +64,7 @@ public:
     void addTimeBasedNote(const TimeBasedNote *note);
     const std::vector<TimeBasedNote> &getTimeBasedNotes();
     virtual const std::string &getAudioCodec()=0;
-    virtual const std::string &getVideoCodec(){};
+    virtual const std::string &getVideoCodec()=0;
 
 protected:
     const std::string   fileName;
@@ -74,11 +74,11 @@ private:
     int                 duration;
     std::string         durationString;
 
-    std::string                     general_QCNotes;
-    AV_Item::ItemProgress           QC_status;
-    AV_Item::QCStatus               item_status;
-    std::vector<TimeBasedNote>      TimeBasedNotes;
-    QCPriority priority;
+    std::string                     generalQCNotes;
+    AV_Item::ProgressStatus         progressStatus;
+    AV_Item::QualityValue           qualityValue;
+    std::vector<TimeBasedNote>      timeBasedNotes;
+    QCPriority                      priority;
 };
 
 

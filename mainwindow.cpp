@@ -10,12 +10,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    QStringList headers;
-
     model = new AVModel(this);
     ui->FilesView->setModel(model);
     loadTestFiles();
-
 }
 
 MainWindow::~MainWindow()
@@ -42,9 +39,7 @@ void MainWindow::on_actionAdd_Row_triggered()
 
 void MainWindow::on_actionTest_triggered()
 {
-//    model->addRow("asdfasdfsdaf");
-
-
+    qDebug() << "Action";
 }
 
 void MainWindow::on_actionRemove_Row_triggered()
@@ -58,13 +53,12 @@ void MainWindow::on_actionRemove_Row_triggered()
 void MainWindow::loadTestFiles()
 {
     qDebug() << "Loading all files";
-    QDir testFolder("D:/media/tv/TimeTrax");
+    QDir testFolder("D:/media/tv/Looney tunes/Vol 3/Disc1");
     if(not testFolder.exists()){
         qDebug() << "Can't find test folder";
     } else {
         qDebug() << "Found the test folder" << testFolder.absolutePath();
-        QStringList AVI_Files;
-        QDirIterator it(testFolder.absolutePath(), QStringList() << "*.avi", QDir::Files);
+        QDirIterator it(testFolder.absolutePath(), QStringList() << "*.mp4", QDir::Files);
         while (it.hasNext()) {
             this->model->addFile(it.next());
         }
@@ -75,4 +69,20 @@ void MainWindow::loadTestFiles()
 void MainWindow::on_actionAbout_triggered()
 {
     qDebug() << "Loading about menu";
+}
+
+void MainWindow::on_FilesView_activated(const QModelIndex &index)
+{
+    qDebug() << "on_FilesView_activated";
+//    qDebug() << index.data(Qt::DisplayRole);
+
+}
+
+void MainWindow::loadRecord(int index) {
+    qDebug() << "index" << index;
+//    this->mapper->
+}
+void MainWindow::on_actionSet_All_Items_as_Done_triggered()
+{
+    qDebug() << "Setting all items as done";
 }

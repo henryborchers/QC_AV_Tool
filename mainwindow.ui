@@ -40,10 +40,44 @@
      <number>0</number>
     </property>
     <item>
-     <widget class="QTableView" name="FilesView">
-      <property name="selectionBehavior">
-       <enum>QAbstractItemView::SelectRows</enum>
+     <widget class="QTreeView" name="FilesView"/>
+    </item>
+    <item>
+     <widget class="QFrame" name="frame">
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
       </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <property name="topMargin">
+        <number>5</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="lbl_fileName">
+         <property name="text">
+          <string>File Name</string>
+         </property>
+         <property name="buddy">
+          <cstring>le_fileName</cstring>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="le_fileName">
+         <property name="text">
+          <string>sdfdsfdsfsdf</string>
+         </property>
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </item>
     <item>
@@ -61,8 +95,8 @@
        <attribute name="title">
         <string>More Information</string>
        </attribute>
-       <layout class="QHBoxLayout" name="horizontalLayout">
-        <item>
+       <layout class="QGridLayout" name="gridLayout">
+        <item row="0" column="1">
          <widget class="QGroupBox" name="groupBox">
           <property name="title">
            <string>Technical Metadata</string>
@@ -183,7 +217,7 @@
           </layout>
          </widget>
         </item>
-        <item>
+        <item row="0" column="2">
          <widget class="QGroupBox" name="groupBox_2">
           <property name="title">
            <string>Other Data</string>
@@ -394,6 +428,7 @@
    <addaction name="actionAdd_Row"/>
    <addaction name="actionRemove_Row"/>
    <addaction name="actionTest"/>
+   <addaction name="actionSet_All_Items_as_Done"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionOpen_Folder">
@@ -424,6 +459,11 @@
   <action name="actionAbout">
    <property name="text">
     <string>About</string>
+   </property>
+  </action>
+  <action name="actionSet_All_Items_as_Done">
+   <property name="text">
+    <string>Set All Items as Done</string>
    </property>
   </action>
  </widget>

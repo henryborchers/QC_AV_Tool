@@ -1,26 +1,14 @@
 #include "avmodel.h"
-#include "MediaInfoDLL.h"
 #include <QtDebug>
 #include <QFileInfo>
 #include "VideoObject.h"
 #include "AudioObject.h"
 
+
+
 AVModel::AVModel(QObject *parent):QAbstractTableModel(parent)
 {
-//    QVariant rower[3];
-//    rower[0]= 34;
-//    rower[1] = "4554";
-//    RowData row1;
-////    row1.fileName = NULL;
-////    row1.fileSize = NULL;
-//    row1.fileType = "gggggg";
-//    this->m_files.append(row1);
 
-
-//    QVariant value(34);
-//    QVariantList *temp= new QVariantList();
-//    temp->append(value);
-//    this->m_files.append(temp);
 }
 
 AVModel::~AVModel()
@@ -30,7 +18,8 @@ AVModel::~AVModel()
 
 int AVModel::rowCount(const QModelIndex &parent) const
 {
-    qDebug() << "rowCount: " << m_files.size();
+    if(parent.isValid())
+        return 0;
     return this->m_files.size();
 }
 
@@ -46,6 +35,23 @@ bool AVModel::setData(const QModelIndex &index, const QVariant &value, int role)
 //        this->m_data[index.row()][index.column()] = value.toString();
 //        qDebug() << "sadfsadf";
 //    }
+
+    int col_index = index.column();
+    int row_index = index.row();
+    if(role==Qt::EditRole) {
+        switch(col_index) {
+            case AVModel::QC_PRIORITY:
+                m_files[row_index]->setPriority((AV_Item::QCPriority)value.toInt());
+                break;
+            case AVModel::QUALITY_VALUE:
+
+                m_files[row_index]->setQuality((AV_Item::QualityValue)value.toInt());
+                break;
+
+            default:
+                break;
+        }
+    }
     return true;
 
 }
@@ -55,37 +61,72 @@ QVariant AVModel::data(const QModelIndex &index, int role) const
     int col_index = index.column();
     int row_index = index.row();
     switch(role){
-    case Qt::DisplayRole:
-        switch(col_index) {
-        case AVModel::fileName:
-            return m_files[row_index]->getFileName().c_str();
-            break;
-        case AVModel::fileSize:
-            return "-";
-//            return m_files[row_index]->getFileSize();
-//            return m_files[row_index].fileSize;
-//            return m_data[row_index][AVModel::fileSize];
-            case AVModel::mediaType:
-                return m_files[row_index]->getMediaTypeString();
-            case AVModel::containerType:
-                return "-";
-//            return "-";
-//            return m_files[row_index].fileType;
-//            return m_data[row_index][AVModel::fileType];
-        case AVModel::duration:
-            return m_files[row_index]->getDurationString().c_str();
-        case AVModel::audioCodec:
-            return m_files[row_index]->getAudioCodec().c_str();
-        case AVModel::videoCodec:
-            if(m_files[row_index]->getMediaType()==AV_Item::MediaType::VIDEO){
-                return m_files[row_index]->getVideoCodec().c_str();
-            } else {
-                return "-";
+        case Qt::DisplayRole:
+            switch(col_index) {
+                case AVModel::FILE_NAME:
+                    return m_files[row_index]->getFileName().c_str();
+
+                case AVModel::FILE_SIZE:
+                    return "-";
+                    case AVModel::MEDIA_TYPE:
+                        return m_files[row_index]->getMediaTypeString();
+                    case AVModel::CONTAINER_TYPE:
+                        return "-";
+                case AVModel::DURATION:
+                    return m_files[row_index]->getDurationString().c_str();
+                case AVModel::AUDIO_CODEC:
+                    return m_files[row_index]->getAudioCodec().c_str();
+                case AVModel::VIDEO_CODEC:
+                    if(m_files[row_index]->getMediaType()==AV_Item::MediaType::VIDEO){
+                        return m_files[row_index]->getVideoCodec().c_str();
+                    } else {
+                        return "-";
+                    }
+                case AVModel::QC_PRIORITY:
+                    switch(m_files[row_index]->getPriority()) {
+                        case AV_Item::LOW_PRIORITY:
+                            return "Low";
+
+                        case AV_Item::NORMAL_PRIORITY:
+                            return "Normal";
+
+                        case AV_Item::HIGH_PRIORITY:
+                            return "High";
+                        default:
+                            return "INVALID OPTION";
+                    }
+
+                case AVModel::QUALITY_VALUE:
+                    switch(m_files[row_index]->getQuality()) {
+                        case AV_Item::UNKNOWN_QUALITY:
+                            return "Unknown";
+                        case AV_Item::PASS:
+                            return "Passed";
+                        case AV_Item::FAIL:
+                            return "Failed";
+                        default:
+                            return "INVALID OPTION";
+
+                    }
+                case AVModel::PROGRESS_STATUS:
+                    switch(m_files[row_index]->getProgress()){
+                        case AV_Item::TO_BE_CHECKED:
+                            return "To Be Checked";
+                        case AV_Item::CHECKING:
+                            return "Checking";
+                        case AV_Item::COMPLETED:
+                            return "Completed";
+                        case AV_Item::DEFERRED:
+                            return "Deferred";
+                        default:
+                            return "INVALID OPTION";
+                    }
+
+                default: break;
+
             }
 
-        }
-
-
+        default: break;
 
 //        return row[col_index];
     }
@@ -99,21 +140,28 @@ QVariant AVModel::headerData(int section, Qt::Orientation orientation, int role)
 
         if (orientation == Qt::Horizontal){
             switch(section){
-            case AVModel::fileName:
-                return QString("File Name");
-            case AVModel::fileSize:
-                return QString("File Size");
-            case AVModel::mediaType:
-                return QString("Media Type");
-            case AVModel::duration:
-                return QString("Duration");
-            case AVModel::audioCodec:
-                return QString("Audio Codec");
-            case AVModel::videoCodec:
-                return QString("Video Codec");
-            case AVModel::containerType:
-                return QString("Container Type");
-
+                case AVModel::FILE_NAME:
+                    return QString("File Name");
+                case AVModel::FILE_SIZE:
+                    return QString("File Size");
+                case AVModel::MEDIA_TYPE:
+                    return QString("Media Type");
+                case AVModel::DURATION:
+                    return QString("Duration");
+                case AVModel::AUDIO_CODEC:
+                    return QString("Audio Codec");
+                case AVModel::VIDEO_CODEC:
+                    return QString("Video Codec");
+                case AVModel::CONTAINER_TYPE:
+                    return QString("Container Type");
+                case AVModel::QC_PRIORITY:
+                    return QString("Priority");
+                case AVModel::PROGRESS_STATUS:
+                    return QString("Progress");
+                case AVModel::QUALITY_VALUE:
+                    return QString("Quality");
+                default:
+                    return QVariant();
             }
 
         }
@@ -161,8 +209,9 @@ bool AVModel::addFile(const QString &fileName)
         VideoObject *newRow = new VideoObject(fileName.toStdString());
         this->m_files.append(newRow);
         this->insertRows(this->rowCount(),1);
+        return true;
     }
-//    this->m_files.append(newRow);
+    return false;
 }
 
 bool AVModel::removeFile(int row)
@@ -171,5 +220,18 @@ bool AVModel::removeFile(int row)
 //        this->m_files.pop_back();
         this->removeRows(this->rowCount()-1, 1);
     return true;
+}
+
+Qt::ItemFlags AVModel::flags(const QModelIndex &index) const {
+    if (!index.isValid())
+        return 0;
+    switch(index.column()){
+        case AVModel::QC_PRIORITY:
+            return Qt::ItemIsEditable | QAbstractItemModel::flags(index);
+        case AVModel::QUALITY_VALUE:
+            return Qt::ItemIsEditable | QAbstractItemModel::flags(index);
+        default:
+            return QAbstractItemModel::flags(index);
+    }
 }
 

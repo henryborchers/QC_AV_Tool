@@ -24,9 +24,10 @@ AV_Item::AV_Item(const std::string filename, AV_Item::MediaType type)
     }
     Mi.Close();
 
-
-
-    std::printf("filename: %s\nduration: %d, %s\nfileSize: %d\nFormat: %d\n", fileName.c_str(), duration, durationString.c_str(), fileSize,
+    progressStatus = TO_BE_CHECKED;
+    priority = NORMAL_PRIORITY;
+    qualityValue = UNKNOWN_QUALITY;
+    std::printf("filename: %s\nDURATION: %d, %s\nfileSize: %d\nFormat: %d\n", fileName.c_str(), duration, durationString.c_str(), fileSize,
                 mediaType);
 }
 
@@ -60,4 +61,28 @@ const char *AV_Item::getMediaTypeString() {
 
 AV_Item::MediaType AV_Item::getMediaType() {
     return this->mediaType;
+}
+
+AV_Item::QCPriority AV_Item::getPriority() {
+    return this->priority;
+}
+
+void AV_Item::setPriority(AV_Item::QCPriority newPriority) {
+    this->priority = newPriority;
+}
+
+AV_Item::QualityValue AV_Item::getQuality() {
+    return this->qualityValue;
+}
+
+AV_Item::ProgressStatus AV_Item::getProgress() {
+    return this->progressStatus;
+}
+
+void AV_Item::setProgress(AV_Item::ProgressStatus value) {
+    this->progressStatus = value;
+}
+
+void AV_Item::setQuality(AV_Item::QualityValue value) {
+    this->qualityValue = value;
 }

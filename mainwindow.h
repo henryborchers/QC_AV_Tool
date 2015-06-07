@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QDataWidgetMapper>
+#include <QItemSelection>
 //#include "filetreemodel.h"
 #include "avmodel.h"
 
@@ -30,12 +32,19 @@ private slots:
 
     void on_actionAbout_triggered();
 
+    void on_FilesView_activated(const QModelIndex &index);
+
+    void loadRecord(int index);
+    void on_actionSet_All_Items_as_Done_triggered();
+
 private:
     Ui::MainWindow *ui;
     void loadTestFiles();
 
 //    fileTreeModel *model;
-    AVModel *model;
+    AVModel             *model;
+    QDataWidgetMapper   *mapper;
+    QItemSelectionModel *selection;
 };
 
 #endif // MAINWINDOW_H

@@ -21,7 +21,7 @@ using namespace MediaInfoDLL;
     aMi.Close();
     std::cout << "Audio Bit Rate: " <<audioBitRate << std::endl;
     std::cout << "Sample rate: " <<audioSampleRate << std::endl;
-    std::cout << "audioCodec: " <<audioCodec << std::endl;
+    std::cout << "AUDIO_CODEC: " <<audioCodec << std::endl;
     std::cout << "audioChannels: " <<audioChannels << std::endl;
 
 
