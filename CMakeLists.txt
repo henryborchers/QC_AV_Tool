@@ -21,7 +21,7 @@ set(SOURCE_FILES
     AV_Item.cpp
     AV_Item.h)
 
-add_executable(QC_machine ${SOURCE_FILES} VideoObject.cpp VideoObject.h AudioObject.cpp AudioObject.h)
+add_executable(QC_machine ${SOURCE_FILES} VideoObject.cpp VideoObject.h AudioObject.cpp AudioObject.h delegate.cpp)
 add_executable(QC_tester ${TEST_FILES} VideoObject.cpp VideoObject.h AudioObject.cpp AudioObject.h)
 
 

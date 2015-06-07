@@ -39,17 +39,22 @@ bool AVModel::setData(const QModelIndex &index, const QVariant &value, int role)
     int col_index = index.column();
     int row_index = index.row();
     if(role==Qt::EditRole) {
-        switch(col_index) {
-            case AVModel::QC_PRIORITY:
-                m_files[row_index]->setPriority((AV_Item::QCPriority)value.toInt());
-                break;
-            case AVModel::QUALITY_VALUE:
+        if(value.toInt() != 0)
+        {
 
-                m_files[row_index]->setQuality((AV_Item::QualityValue)value.toInt());
-                break;
+            switch(col_index) {
+                case AVModel::CLM_QC_PRIORITY:
 
-            default:
-                break;
+                    m_files[row_index]->setPriority((AV_Item::QCPriority)value.toInt());
+                    return true;
+                case AVModel::CLM_QUALITY_VALUE:
+
+                    m_files[row_index]->setQuality((AV_Item::QualityValue)value.toInt());
+                    return true;
+
+                default:
+                    return true;
+            }
         }
     }
     return true;
@@ -63,60 +68,60 @@ QVariant AVModel::data(const QModelIndex &index, int role) const
     switch(role){
         case Qt::DisplayRole:
             switch(col_index) {
-                case AVModel::FILE_NAME:
+                case AVModel::CLM_FILE_NAME:
                     return m_files[row_index]->getFileName().c_str();
 
-                case AVModel::FILE_SIZE:
+                case AVModel::CML_FILE_SIZE:
                     return "-";
-                    case AVModel::MEDIA_TYPE:
+                    case AVModel::CLM_MEDIA_TYPE:
                         return m_files[row_index]->getMediaTypeString();
-                    case AVModel::CONTAINER_TYPE:
+                    case AVModel::CLM_CONTAINER_TYPE:
                         return "-";
-                case AVModel::DURATION:
+                case AVModel::CLM_DURATION:
                     return m_files[row_index]->getDurationString().c_str();
-                case AVModel::AUDIO_CODEC:
+                case AVModel::CLM_AUDIO_CODEC:
                     return m_files[row_index]->getAudioCodec().c_str();
-                case AVModel::VIDEO_CODEC:
-                    if(m_files[row_index]->getMediaType()==AV_Item::MediaType::VIDEO){
+                case AVModel::CLM_VIDEO_CODEC:
+                    if(m_files[row_index]->getMediaType()==AV_Item::MediaType::MT_VIDEO){
                         return m_files[row_index]->getVideoCodec().c_str();
                     } else {
                         return "-";
                     }
-                case AVModel::QC_PRIORITY:
+                case AVModel::CLM_QC_PRIORITY:
                     switch(m_files[row_index]->getPriority()) {
-                        case AV_Item::LOW_PRIORITY:
+                        case AV_Item::PRIORITY_LOW:
                             return "Low";
 
-                        case AV_Item::NORMAL_PRIORITY:
+                        case AV_Item::PRIORITY_NORMAL:
                             return "Normal";
 
-                        case AV_Item::HIGH_PRIORITY:
+                        case AV_Item::PRIORITY_HIGH:
                             return "High";
                         default:
                             return "INVALID OPTION";
                     }
 
-                case AVModel::QUALITY_VALUE:
+                case AVModel::CLM_QUALITY_VALUE:
                     switch(m_files[row_index]->getQuality()) {
-                        case AV_Item::UNKNOWN_QUALITY:
+                        case AV_Item::QV_UNKNOWN:
                             return "Unknown";
-                        case AV_Item::PASS:
+                        case AV_Item::QV_PASS:
                             return "Passed";
-                        case AV_Item::FAIL:
+                        case AV_Item::QV_FAIL:
                             return "Failed";
                         default:
                             return "INVALID OPTION";
 
                     }
-                case AVModel::PROGRESS_STATUS:
+                case AVModel::CLM_PROGRESS_STATUS:
                     switch(m_files[row_index]->getProgress()){
-                        case AV_Item::TO_BE_CHECKED:
+                        case AV_Item::PS_UNCHECKED:
                             return "To Be Checked";
-                        case AV_Item::CHECKING:
+                        case AV_Item::PS_CHECKING:
                             return "Checking";
-                        case AV_Item::COMPLETED:
+                        case AV_Item::PS_COMPLETED:
                             return "Completed";
-                        case AV_Item::DEFERRED:
+                        case AV_Item::PS_DEFERRED:
                             return "Deferred";
                         default:
                             return "INVALID OPTION";
@@ -125,7 +130,14 @@ QVariant AVModel::data(const QModelIndex &index, int role) const
                 default: break;
 
             }
+        case Qt::EditRole:
+            switch(col_index){
+                case AVModel::CLM_QC_PRIORITY:
+                    return m_files[row_index]->getPriority();
+                case AVModel::CLM_QUALITY_VALUE:
+                    return m_files[row_index]->getQuality();
 
+            }
         default: break;
 
 //        return row[col_index];
@@ -140,25 +152,25 @@ QVariant AVModel::headerData(int section, Qt::Orientation orientation, int role)
 
         if (orientation == Qt::Horizontal){
             switch(section){
-                case AVModel::FILE_NAME:
+                case AVModel::CLM_FILE_NAME:
                     return QString("File Name");
-                case AVModel::FILE_SIZE:
+                case AVModel::CML_FILE_SIZE:
                     return QString("File Size");
-                case AVModel::MEDIA_TYPE:
+                case AVModel::CLM_MEDIA_TYPE:
                     return QString("Media Type");
-                case AVModel::DURATION:
+                case AVModel::CLM_DURATION:
                     return QString("Duration");
-                case AVModel::AUDIO_CODEC:
+                case AVModel::CLM_AUDIO_CODEC:
                     return QString("Audio Codec");
-                case AVModel::VIDEO_CODEC:
+                case AVModel::CLM_VIDEO_CODEC:
                     return QString("Video Codec");
-                case AVModel::CONTAINER_TYPE:
+                case AVModel::CLM_CONTAINER_TYPE:
                     return QString("Container Type");
-                case AVModel::QC_PRIORITY:
+                case AVModel::CLM_QC_PRIORITY:
                     return QString("Priority");
-                case AVModel::PROGRESS_STATUS:
+                case AVModel::CLM_PROGRESS_STATUS:
                     return QString("Progress");
-                case AVModel::QUALITY_VALUE:
+                case AVModel::CLM_QUALITY_VALUE:
                     return QString("Quality");
                 default:
                     return QVariant();
@@ -226,9 +238,9 @@ Qt::ItemFlags AVModel::flags(const QModelIndex &index) const {
     if (!index.isValid())
         return 0;
     switch(index.column()){
-        case AVModel::QC_PRIORITY:
+        case AVModel::CLM_QC_PRIORITY:
             return Qt::ItemIsEditable | QAbstractItemModel::flags(index);
-        case AVModel::QUALITY_VALUE:
+        case AVModel::CLM_QUALITY_VALUE:
             return Qt::ItemIsEditable | QAbstractItemModel::flags(index);
         default:
             return QAbstractItemModel::flags(index);

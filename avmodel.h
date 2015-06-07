@@ -25,16 +25,16 @@ public:
 
 
     enum columnNames {
-        FILE_NAME = 0,
-        FILE_SIZE = 1,
-        MEDIA_TYPE = 2,
-        CONTAINER_TYPE = 3,
-        DURATION = 4,
-        AUDIO_CODEC = 5,
-        VIDEO_CODEC = 6,
-        QC_PRIORITY = 7,
-        PROGRESS_STATUS = 8,
-        QUALITY_VALUE = 9};
+        CLM_FILE_NAME = 0,
+        CML_FILE_SIZE = 1,
+        CLM_MEDIA_TYPE = 2,
+        CLM_CONTAINER_TYPE = 3,
+        CLM_DURATION = 4,
+        CLM_AUDIO_CODEC = 5,
+        CLM_VIDEO_CODEC = 6,
+        CLM_QC_PRIORITY = 7,
+        CLM_PROGRESS_STATUS = 8,
+        CLM_QUALITY_VALUE = 9};
 
 private:
     int column_size = 10;

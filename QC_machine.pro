@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     avmodel.cpp \
     AudioObject.cpp \
     VideoObject.cpp \
-    AV_Item.cpp
+    AV_Item.cpp \
+    delegate.cpp
 
 HEADERS  += mainwindow.h \
     treeitem.h \
@@ -30,7 +31,8 @@ HEADERS  += mainwindow.h \
     MediaInfoDLL.h \
     AudioObject.h \
     VideoObject.h \
-    AV_Item.h
+    AV_Item.h \
+    delegate.h
 
 FORMS    += mainwindow.ui
 CONFIG += c++11

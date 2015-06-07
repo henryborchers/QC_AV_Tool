@@ -5,8 +5,8 @@
 #include <QDataWidgetMapper>
 #include <QItemSelection>
 //#include "filetreemodel.h"
+#include "delegate.h"
 #include "avmodel.h"
-
 namespace Ui {
 class MainWindow;
 }
@@ -40,6 +40,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     void loadTestFiles();
+    Delegate *myDelegate;
 
 //    fileTreeModel *model;
     AVModel             *model;

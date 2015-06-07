@@ -24,9 +24,9 @@ AV_Item::AV_Item(const std::string filename, AV_Item::MediaType type)
     }
     Mi.Close();
 
-    progressStatus = TO_BE_CHECKED;
-    priority = NORMAL_PRIORITY;
-    qualityValue = UNKNOWN_QUALITY;
+    progressStatus = PS_UNCHECKED;
+    priority = PRIORITY_NORMAL;
+    qualityValue = QV_UNKNOWN;
     std::printf("filename: %s\nDURATION: %d, %s\nfileSize: %d\nFormat: %d\n", fileName.c_str(), duration, durationString.c_str(), fileSize,
                 mediaType);
 }
@@ -42,16 +42,16 @@ const std::string &AV_Item::getDurationString() {
 const char *AV_Item::getMediaTypeString() {
 
     switch(this->mediaType){
-        case UNKNOWN_TYPE:
+        case MT_UNKNOWN:
             return "Unknown type";
 
-        case AUDIO:
+        case MT_AUDIO:
             return "Audio";
 
-        case VIDEO:
+        case MT_VIDEO:
             return "Video";
 
-        case OTHER:
+        case MT_OTHER:
             return "Other";
 
         default:

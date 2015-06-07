@@ -11,7 +11,9 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     model = new AVModel(this);
+    myDelegate = new Delegate(this);
     ui->FilesView->setModel(model);
+    ui->FilesView->setItemDelegate(myDelegate);
     loadTestFiles();
 }
 

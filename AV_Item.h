@@ -11,28 +11,32 @@
 class AV_Item {
 public:
     enum MediaType {
-        UNKNOWN_TYPE,
-        AUDIO,
-        VIDEO,
-        OTHER
+        MT_NONE,
+        MT_UNKNOWN,
+        MT_AUDIO,
+        MT_VIDEO,
+        MT_OTHER
     };
     enum ProgressStatus {
-        TO_BE_CHECKED,
-        CHECKING,
-        COMPLETED,
-        DEFERRED
+        PS_NONE,
+        PS_UNCHECKED,
+        PS_CHECKING,
+        PS_COMPLETED,
+        PS_DEFERRED
     };
 
     enum QualityValue {
-        UNKNOWN_QUALITY     = 0,
-        PASS                = 1,
-        FAIL                = 2
+        QV_NONE = 0,
+        QV_UNKNOWN = 1,
+        QV_PASS = 2,
+        QV_FAIL = 3
     };
     
     enum QCPriority {
-        LOW_PRIORITY    = 0,
-        NORMAL_PRIORITY = 1,
-        HIGH_PRIORITY   = 2
+        PRIORITY_NONE = 0,
+        PRIORITY_LOW = 1,
+        PRIORITY_NORMAL = 2,
+        PRIORITY_HIGH = 3
     };
     
     struct TimeBasedNote {

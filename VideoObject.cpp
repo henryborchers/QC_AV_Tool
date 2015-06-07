@@ -6,7 +6,7 @@
 #include "MediaInfoDLL.h"
 
 
-VideoObject::VideoObject(const std::string &filename): AudioObject(filename, VIDEO) {
+VideoObject::VideoObject(const std::string &filename): AudioObject(filename, MT_VIDEO) {
     using namespace MediaInfoDLL;
     MediaInfo vMi;
     vMi.Open(fileName);
