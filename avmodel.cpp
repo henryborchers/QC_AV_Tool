@@ -1,6 +1,7 @@
 #include "avmodel.h"
 #include <QtDebug>
 #include <QFileInfo>
+#include <QFont>
 #include "VideoObject.h"
 #include "AudioObject.h"
 
@@ -46,15 +47,19 @@ bool AVModel::setData(const QModelIndex &index, const QVariant &value, int role)
                 case AVModel::CLM_QC_PRIORITY:
 
                     m_files[row_index]->setPriority((AV_Item::QCPriority)value.toInt());
-                    return true;
+                    break;
                 case AVModel::CLM_QUALITY_VALUE:
 
                     m_files[row_index]->setQuality((AV_Item::QualityValue)value.toInt());
-                    return true;
+                    break;
 
                 default:
-                    return true;
+                    break;
+
             }
+            QVector<int> roles;
+            roles.append(Qt::DisplayRole);
+            emit dataChanged(index, index, roles);
         }
     }
     return true;
@@ -137,6 +142,12 @@ QVariant AVModel::data(const QModelIndex &index, int role) const
                 case AVModel::CLM_QUALITY_VALUE:
                     return m_files[row_index]->getQuality();
 
+            }
+        case Qt::FontRole:
+            if(row_index == activeRow) {
+                QFont boldFont;
+                boldFont.setBold(true);
+                return boldFont;
             }
         default: break;
 
@@ -247,3 +258,17 @@ Qt::ItemFlags AVModel::flags(const QModelIndex &index) const {
     }
 }
 
+void AVModel::setActiveRow(int row) {
+    qDebug() << "Changing active row to " << row;
+    activeRow = row;
+
+    QModelIndex topLeft = index(0,0);
+    QModelIndex bottomRight = index(rowCount() - 1,columnCount() - 1);
+    QVector<int> roles;
+    roles.append(Qt::FontRole);
+    emit dataChanged(topLeft, bottomRight, roles);
+}
+
+int AVModel::getActiveRow() {
+    return activeRow;
+}
