@@ -40,8 +40,9 @@ bool AVModel::setData(const QModelIndex &index, const QVariant &value, int role)
     int col_index = index.column();
     int row_index = index.row();
     if(role==Qt::EditRole) {
-        if(value.toInt() != 0)
-        {
+        if(value.isNull()) {
+            return false;
+        } else {
 
             switch(col_index) {
                 case AVModel::CLM_QC_PRIORITY:
@@ -76,7 +77,7 @@ QVariant AVModel::data(const QModelIndex &index, int role) const
                 case AVModel::CLM_FILE_NAME:
                     return m_files[row_index]->getFileName().c_str();
 
-                case AVModel::CML_FILE_SIZE:
+                case AVModel::CLM_FILE_SIZE:
                     return "-";
                     case AVModel::CLM_MEDIA_TYPE:
                         return m_files[row_index]->getMediaTypeString();
@@ -85,7 +86,11 @@ QVariant AVModel::data(const QModelIndex &index, int role) const
                 case AVModel::CLM_DURATION:
                     return m_files[row_index]->getDurationString().c_str();
                 case AVModel::CLM_AUDIO_CODEC:
-                    return m_files[row_index]->getAudioCodec().c_str();
+                    if(m_files[row_index]->hasAudio()) {
+                        return m_files[row_index]->getAudioCodec().c_str();
+                    } else {
+                        return "-";
+                    }
                 case AVModel::CLM_VIDEO_CODEC:
                     if(m_files[row_index]->getMediaType()==AV_Item::MediaType::MT_VIDEO){
                         return m_files[row_index]->getVideoCodec().c_str();
@@ -141,6 +146,18 @@ QVariant AVModel::data(const QModelIndex &index, int role) const
                     return m_files[row_index]->getPriority();
                 case AVModel::CLM_QUALITY_VALUE:
                     return m_files[row_index]->getQuality();
+                case AVModel::CLM_FILE_NAME:
+                    return m_files[row_index]->getFileName().c_str();
+                case AVModel::CLM_DURATION:
+                    return m_files[row_index]->getDurationString().c_str();
+                case AVModel::CLM_MEDIA_TYPE:
+                    return m_files[row_index]->getMediaTypeString();
+                case AVModel::CLM_AUDIO_CODEC:
+                    if(m_files[row_index]->hasAudio()){
+                        return m_files[row_index]->getAudioCodec().c_str();
+                    } else {
+                        return "-";
+                    }
 
             }
         case Qt::FontRole:
@@ -165,7 +182,7 @@ QVariant AVModel::headerData(int section, Qt::Orientation orientation, int role)
             switch(section){
                 case AVModel::CLM_FILE_NAME:
                     return QString("File Name");
-                case AVModel::CML_FILE_SIZE:
+                case AVModel::CLM_FILE_SIZE:
                     return QString("File Size");
                 case AVModel::CLM_MEDIA_TYPE:
                     return QString("Media Type");
@@ -250,7 +267,7 @@ Qt::ItemFlags AVModel::flags(const QModelIndex &index) const {
         return 0;
     switch(index.column()){
         case AVModel::CLM_QC_PRIORITY:
-            return Qt::ItemIsEditable | QAbstractItemModel::flags(index);
+            return Qt::ItemIsEditable |  QAbstractItemModel::flags(index);
         case AVModel::CLM_QUALITY_VALUE:
             return Qt::ItemIsEditable | QAbstractItemModel::flags(index);
         default:
@@ -272,3 +289,11 @@ void AVModel::setActiveRow(int row) {
 int AVModel::getActiveRow() {
     return activeRow;
 }
+
+//QModelIndex AVModel::index(int row, int column, const QModelIndex &parent) const {
+//    if(!hasIndex(row, column, parent))
+//        return QModelIndex();
+//        QModelIndex temp;
+//
+//    return parent;
+//}

@@ -19,14 +19,16 @@ public:
     bool insertRows(int row, int count, const QModelIndex &parent = QModelIndex());
     bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex());
     Qt::ItemFlags flags(const QModelIndex &index) const Q_DECL_OVERRIDE;
+//    QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const Q_DECL_OVERRIDE;
+    void setActiveRow(int row);
+    int getActiveRow();
 
     bool addFile(const QString & fileName);
     bool removeFile(int row);
 
-
     enum columnNames {
         CLM_FILE_NAME = 0,
-        CML_FILE_SIZE = 1,
+        CLM_FILE_SIZE = 1,
         CLM_MEDIA_TYPE = 2,
         CLM_CONTAINER_TYPE = 3,
         CLM_DURATION = 4,
@@ -38,6 +40,7 @@ public:
 
 private:
     int column_size = 10;
+    int activeRow;
 //    QVector<QVariantList*> m_files;
 //    QVector<RowData> m_files;
     QVector<AV_Item*> m_files;

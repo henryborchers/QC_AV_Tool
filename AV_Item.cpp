@@ -20,6 +20,15 @@ AV_Item::AV_Item(const std::string filename, AV_Item::MediaType type)
         fileSize = (unsigned int) std::stoi(Mi.Get(Stream_General, 0, __T("FileSize"), Info_Text, Info_Name));;
         duration = std::stoi(Mi.Get(Stream_General, 0, __T("Duration"), Info_Text, Info_Name));
         durationString = Mi.Get(Stream_General, 0, __T("Duration/String3"), Info_Text, Info_Name);
+//        int streams = std::stoi();
+
+        std::string m = Mi.Get(Stream_General, 0, __T("AudioCount"), Info_Text, Info_Name);
+
+        if( m != "") {
+            this->hasSoundtrack = true;
+        } else {
+            this->hasSoundtrack = false;
+        }
 
     }
     Mi.Close();
@@ -85,4 +94,8 @@ void AV_Item::setProgress(AV_Item::ProgressStatus value) {
 
 void AV_Item::setQuality(AV_Item::QualityValue value) {
     this->qualityValue = value;
+}
+
+bool AV_Item::hasAudio() {
+    return this->hasSoundtrack;
 }

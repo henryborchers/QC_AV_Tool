@@ -45,3 +45,35 @@ const std::string &VideoObject::getVideoCodec() {
 const std::string &VideoObject::getColorSpace() {
     return this->colorSpace;
 }
+
+const std::string &VideoObject::getChromaSubsampling() {
+    return this->chromaSubsampling;
+}
+
+int VideoObject::getVideoBitRate() {
+    return this->videoBitRate;
+}
+
+int VideoObject::getVideoColorDepth() {
+    return this->videoColorDepth;
+}
+
+float VideoObject::getFrameRate() {
+    return this->frameRate;
+}
+
+int VideoObject::getResolutionX() {
+    return this->resolutionX;
+}
+
+int VideoObject::getResolutionY() {
+    return this->resolutionY;
+}
+
+bool VideoObject::isProgressive() {
+    return this->progressive;
+}
+
+bool VideoObject::isVideoCodecLossy() {
+    return this->videoCodecLossy;
+}

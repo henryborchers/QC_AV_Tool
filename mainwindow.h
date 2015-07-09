@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QDataWidgetMapper>
 #include <QItemSelection>
+#include <QtGui/qstandarditemmodel.h>
 //#include "filetreemodel.h"
 #include "delegate.h"
 #include "avmodel.h"
@@ -37,6 +38,8 @@ private slots:
     void loadRecord(int index);
     void on_actionSet_All_Items_as_Done_triggered();
 
+    void on_btn_play_clicked();
+
 private:
     Ui::MainWindow *ui;
     void loadTestFiles();
@@ -44,6 +47,7 @@ private:
 
 //    fileTreeModel *model;
     AVModel             *model;
+    QStandardItemModel  *testModel;
     QDataWidgetMapper   *mapper;
     QItemSelectionModel *selection;
 };

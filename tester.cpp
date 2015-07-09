@@ -4,20 +4,16 @@
 
 #include <cstdio>
 #include <iostream>
-#include <string>
-#include "AV_Item.h"
-#include "VideoObject.h"
-#include "AudioObject.h"
+//#include "videoplayer.h"
+#include "MediaPlayer.h"
+//#include <filesystem>
 
 
 int main(){
     std::puts("\nTesting VideoObject ()");
-//    AV_Item dummy("D:\\media\\tv\\15.mp4");
-    VideoObject video("D:\\media\\tv\\15.mp4");
-    std::puts("\nTesting AudioObject ()");
-    AudioObject audio("D:\\Users\\Henry\\Documents\\workspace\\qt\\QC_machine\\03 Stranger.mp3");
-
-
+//    videoPlayer("d:/media/tv/15.mp4");
+//    MediaPlayer tester("d:/media/tv/15.mp4");
+    MediaPlayer tester("d:/media/tv/15.mp4");
 
     return 0;
 }

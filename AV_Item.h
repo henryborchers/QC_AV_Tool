@@ -11,14 +11,12 @@
 class AV_Item {
 public:
     enum MediaType {
-        MT_NONE,
         MT_UNKNOWN,
         MT_AUDIO,
         MT_VIDEO,
         MT_OTHER
     };
     enum ProgressStatus {
-        PS_NONE,
         PS_UNCHECKED,
         PS_CHECKING,
         PS_COMPLETED,
@@ -26,17 +24,16 @@ public:
     };
 
     enum QualityValue {
-        QV_NONE = 0,
-        QV_UNKNOWN = 1,
-        QV_PASS = 2,
-        QV_FAIL = 3
+        QV_UNKNOWN = 0,
+        QV_PASS = 1,
+        QV_FAIL = 2
     };
     
     enum QCPriority {
-        PRIORITY_NONE = 0,
-        PRIORITY_LOW = 1,
-        PRIORITY_NORMAL = 2,
-        PRIORITY_HIGH = 3
+//        PRIORITY_NONE = 0,
+        PRIORITY_LOW = 0,
+        PRIORITY_NORMAL = 1,
+        PRIORITY_HIGH = 2
     };
     
     struct TimeBasedNote {
@@ -69,15 +66,19 @@ public:
     const std::vector<TimeBasedNote> &getTimeBasedNotes();
     virtual const std::string &getAudioCodec()=0;
     virtual const std::string &getVideoCodec()=0;
+    bool hasAudio();
+
 
 protected:
     const std::string   fileName;
+    bool                hasSoundtrack;
 private:
     unsigned int        fileSize;
     AV_Item::MediaType  mediaType;
     int                 duration;
-    std::string         durationString;
 
+
+    std::string                     durationString;
     std::string                     generalQCNotes;
     AV_Item::ProgressStatus         progressStatus;
     AV_Item::QualityValue           qualityValue;

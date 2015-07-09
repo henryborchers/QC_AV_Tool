@@ -24,6 +24,7 @@ protected:
     int audioSampleRate;
     std::string audioCodec;
     int audioChannels;
+    bool initAudio();
 };
 
 

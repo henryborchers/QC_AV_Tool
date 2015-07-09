@@ -13,6 +13,7 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QComboBox>
 #include <QtWidgets/QFormLayout>
 #include <QtWidgets/QFrame>
 #include <QtWidgets/QGridLayout>
@@ -24,6 +25,7 @@
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
+#include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTabWidget>
 #include <QtWidgets/QTextEdit>
@@ -56,10 +58,10 @@ public:
     QGridLayout *gridLayout;
     QGroupBox *groupBox;
     QFormLayout *formLayout;
-    QLabel *label_4;
-    QLineEdit *lineEdit_3;
-    QLabel *label_2;
-    QLineEdit *lineEdit_2;
+    QLabel *lbl_duration;
+    QLineEdit *le_duration;
+    QLabel *lbl_fileSize;
+    QLineEdit *le_file_size;
     QLabel *label_5;
     QLineEdit *lineEdit_8;
     QLabel *label_6;
@@ -70,14 +72,12 @@ public:
     QLineEdit *lineEdit;
     QLabel *label_8;
     QLineEdit *lineEdit_7;
-    QLineEdit *lineEdit_4;
-    QLabel *label_3;
+    QLineEdit *le_type;
+    QLabel *lbl_type;
     QGroupBox *groupBox_2;
     QFormLayout *formLayout_2;
-    QLabel *label_9;
-    QLineEdit *lineEdit_9;
-    QLabel *label_10;
-    QLineEdit *lineEdit_10;
+    QLabel *lbl_priority;
+    QLabel *lbl_quality;
     QLabel *label_11;
     QLineEdit *lineEdit_11;
     QLabel *label_12;
@@ -88,13 +88,39 @@ public:
     QLineEdit *lineEdit_14;
     QLabel *label_15;
     QLineEdit *lineEdit_15;
-    QLineEdit *lineEdit_16;
-    QLabel *label_16;
+    QLabel *lbl_progress;
+    QComboBox *cb_priority;
+    QComboBox *cb_progress;
+    QComboBox *cb_quality;
+    QWidget *widget;
+    QGroupBox *groupBox_3;
+    QFormLayout *formLayout_3;
+    QLabel *lbl_audioCodec;
+    QLineEdit *le_audioCodec;
+    QLabel *lbl_audioChannels;
+    QLineEdit *le_audioChannels;
+    QLabel *lbl_audioBitDepth;
+    QLineEdit *le_audioBitDepth;
+    QLabel *lbl_audioSampleRate;
+    QLineEdit *le_audioSampleRate;
+    QLabel *lbl_audioBitRate;
+    QLineEdit *le_audioBitRate;
+    QGroupBox *groupBox_4;
+    QFormLayout *formLayout_4;
+    QLabel *label_23;
+    QLineEdit *lineEdit_21;
+    QLabel *label_24;
+    QLineEdit *lineEdit_22;
+    QLabel *label_25;
+    QLineEdit *lineEdit_23;
+    QLabel *label_26;
+    QLineEdit *lineEdit_24;
     QWidget *tab_validation;
     QLabel *label_17;
     QWidget *tab_comments;
     QVBoxLayout *verticalLayout_2;
     QTextEdit *textEdit;
+    QPushButton *btn_play;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QMenu *menuHelp;
@@ -172,27 +198,27 @@ public:
         formLayout->setSpacing(6);
         formLayout->setContentsMargins(11, 11, 11, 11);
         formLayout->setObjectName(QStringLiteral("formLayout"));
-        label_4 = new QLabel(groupBox);
-        label_4->setObjectName(QStringLiteral("label_4"));
+        lbl_duration = new QLabel(groupBox);
+        lbl_duration->setObjectName(QStringLiteral("lbl_duration"));
 
-        formLayout->setWidget(2, QFormLayout::LabelRole, label_4);
+        formLayout->setWidget(2, QFormLayout::LabelRole, lbl_duration);
 
-        lineEdit_3 = new QLineEdit(groupBox);
-        lineEdit_3->setObjectName(QStringLiteral("lineEdit_3"));
-        lineEdit_3->setReadOnly(true);
+        le_duration = new QLineEdit(groupBox);
+        le_duration->setObjectName(QStringLiteral("le_duration"));
+        le_duration->setReadOnly(true);
 
-        formLayout->setWidget(2, QFormLayout::FieldRole, lineEdit_3);
+        formLayout->setWidget(2, QFormLayout::FieldRole, le_duration);
 
-        label_2 = new QLabel(groupBox);
-        label_2->setObjectName(QStringLiteral("label_2"));
+        lbl_fileSize = new QLabel(groupBox);
+        lbl_fileSize->setObjectName(QStringLiteral("lbl_fileSize"));
 
-        formLayout->setWidget(3, QFormLayout::LabelRole, label_2);
+        formLayout->setWidget(3, QFormLayout::LabelRole, lbl_fileSize);
 
-        lineEdit_2 = new QLineEdit(groupBox);
-        lineEdit_2->setObjectName(QStringLiteral("lineEdit_2"));
-        lineEdit_2->setReadOnly(true);
+        le_file_size = new QLineEdit(groupBox);
+        le_file_size->setObjectName(QStringLiteral("le_file_size"));
+        le_file_size->setReadOnly(true);
 
-        formLayout->setWidget(3, QFormLayout::FieldRole, lineEdit_2);
+        formLayout->setWidget(3, QFormLayout::FieldRole, le_file_size);
 
         label_5 = new QLabel(groupBox);
         label_5->setObjectName(QStringLiteral("label_5"));
@@ -249,16 +275,16 @@ public:
 
         formLayout->setWidget(8, QFormLayout::FieldRole, lineEdit_7);
 
-        lineEdit_4 = new QLineEdit(groupBox);
-        lineEdit_4->setObjectName(QStringLiteral("lineEdit_4"));
-        lineEdit_4->setReadOnly(true);
+        le_type = new QLineEdit(groupBox);
+        le_type->setObjectName(QStringLiteral("le_type"));
+        le_type->setReadOnly(true);
 
-        formLayout->setWidget(1, QFormLayout::FieldRole, lineEdit_4);
+        formLayout->setWidget(1, QFormLayout::FieldRole, le_type);
 
-        label_3 = new QLabel(groupBox);
-        label_3->setObjectName(QStringLiteral("label_3"));
+        lbl_type = new QLabel(groupBox);
+        lbl_type->setObjectName(QStringLiteral("lbl_type"));
 
-        formLayout->setWidget(1, QFormLayout::LabelRole, label_3);
+        formLayout->setWidget(1, QFormLayout::LabelRole, lbl_type);
 
 
         gridLayout->addWidget(groupBox, 0, 1, 1, 1);
@@ -269,27 +295,15 @@ public:
         formLayout_2->setSpacing(6);
         formLayout_2->setContentsMargins(11, 11, 11, 11);
         formLayout_2->setObjectName(QStringLiteral("formLayout_2"));
-        label_9 = new QLabel(groupBox_2);
-        label_9->setObjectName(QStringLiteral("label_9"));
+        lbl_priority = new QLabel(groupBox_2);
+        lbl_priority->setObjectName(QStringLiteral("lbl_priority"));
 
-        formLayout_2->setWidget(2, QFormLayout::LabelRole, label_9);
+        formLayout_2->setWidget(2, QFormLayout::LabelRole, lbl_priority);
 
-        lineEdit_9 = new QLineEdit(groupBox_2);
-        lineEdit_9->setObjectName(QStringLiteral("lineEdit_9"));
-        lineEdit_9->setReadOnly(true);
+        lbl_quality = new QLabel(groupBox_2);
+        lbl_quality->setObjectName(QStringLiteral("lbl_quality"));
 
-        formLayout_2->setWidget(2, QFormLayout::FieldRole, lineEdit_9);
-
-        label_10 = new QLabel(groupBox_2);
-        label_10->setObjectName(QStringLiteral("label_10"));
-
-        formLayout_2->setWidget(3, QFormLayout::LabelRole, label_10);
-
-        lineEdit_10 = new QLineEdit(groupBox_2);
-        lineEdit_10->setObjectName(QStringLiteral("lineEdit_10"));
-        lineEdit_10->setReadOnly(true);
-
-        formLayout_2->setWidget(3, QFormLayout::FieldRole, lineEdit_10);
+        formLayout_2->setWidget(3, QFormLayout::LabelRole, lbl_quality);
 
         label_11 = new QLabel(groupBox_2);
         label_11->setObjectName(QStringLiteral("label_11"));
@@ -346,19 +360,142 @@ public:
 
         formLayout_2->setWidget(8, QFormLayout::FieldRole, lineEdit_15);
 
-        lineEdit_16 = new QLineEdit(groupBox_2);
-        lineEdit_16->setObjectName(QStringLiteral("lineEdit_16"));
-        lineEdit_16->setReadOnly(true);
+        lbl_progress = new QLabel(groupBox_2);
+        lbl_progress->setObjectName(QStringLiteral("lbl_progress"));
 
-        formLayout_2->setWidget(1, QFormLayout::FieldRole, lineEdit_16);
+        formLayout_2->setWidget(1, QFormLayout::LabelRole, lbl_progress);
 
-        label_16 = new QLabel(groupBox_2);
-        label_16->setObjectName(QStringLiteral("label_16"));
+        cb_priority = new QComboBox(groupBox_2);
+        cb_priority->setObjectName(QStringLiteral("cb_priority"));
 
-        formLayout_2->setWidget(1, QFormLayout::LabelRole, label_16);
+        formLayout_2->setWidget(2, QFormLayout::FieldRole, cb_priority);
+
+        cb_progress = new QComboBox(groupBox_2);
+        cb_progress->setObjectName(QStringLiteral("cb_progress"));
+
+        formLayout_2->setWidget(1, QFormLayout::FieldRole, cb_progress);
+
+        cb_quality = new QComboBox(groupBox_2);
+        cb_quality->setObjectName(QStringLiteral("cb_quality"));
+        cb_quality->setFrame(true);
+
+        formLayout_2->setWidget(3, QFormLayout::FieldRole, cb_quality);
+
+        widget = new QWidget(groupBox_2);
+        widget->setObjectName(QStringLiteral("widget"));
+
+        formLayout_2->setWidget(9, QFormLayout::FieldRole, widget);
 
 
-        gridLayout->addWidget(groupBox_2, 0, 2, 1, 1);
+        gridLayout->addWidget(groupBox_2, 0, 4, 1, 1);
+
+        groupBox_3 = new QGroupBox(tab_moreinfo);
+        groupBox_3->setObjectName(QStringLiteral("groupBox_3"));
+        formLayout_3 = new QFormLayout(groupBox_3);
+        formLayout_3->setSpacing(6);
+        formLayout_3->setContentsMargins(11, 11, 11, 11);
+        formLayout_3->setObjectName(QStringLiteral("formLayout_3"));
+        lbl_audioCodec = new QLabel(groupBox_3);
+        lbl_audioCodec->setObjectName(QStringLiteral("lbl_audioCodec"));
+
+        formLayout_3->setWidget(0, QFormLayout::LabelRole, lbl_audioCodec);
+
+        le_audioCodec = new QLineEdit(groupBox_3);
+        le_audioCodec->setObjectName(QStringLiteral("le_audioCodec"));
+
+        formLayout_3->setWidget(0, QFormLayout::FieldRole, le_audioCodec);
+
+        lbl_audioChannels = new QLabel(groupBox_3);
+        lbl_audioChannels->setObjectName(QStringLiteral("lbl_audioChannels"));
+
+        formLayout_3->setWidget(2, QFormLayout::LabelRole, lbl_audioChannels);
+
+        le_audioChannels = new QLineEdit(groupBox_3);
+        le_audioChannels->setObjectName(QStringLiteral("le_audioChannels"));
+
+        formLayout_3->setWidget(2, QFormLayout::FieldRole, le_audioChannels);
+
+        lbl_audioBitDepth = new QLabel(groupBox_3);
+        lbl_audioBitDepth->setObjectName(QStringLiteral("lbl_audioBitDepth"));
+
+        formLayout_3->setWidget(4, QFormLayout::LabelRole, lbl_audioBitDepth);
+
+        le_audioBitDepth = new QLineEdit(groupBox_3);
+        le_audioBitDepth->setObjectName(QStringLiteral("le_audioBitDepth"));
+
+        formLayout_3->setWidget(4, QFormLayout::FieldRole, le_audioBitDepth);
+
+        lbl_audioSampleRate = new QLabel(groupBox_3);
+        lbl_audioSampleRate->setObjectName(QStringLiteral("lbl_audioSampleRate"));
+
+        formLayout_3->setWidget(5, QFormLayout::LabelRole, lbl_audioSampleRate);
+
+        le_audioSampleRate = new QLineEdit(groupBox_3);
+        le_audioSampleRate->setObjectName(QStringLiteral("le_audioSampleRate"));
+
+        formLayout_3->setWidget(5, QFormLayout::FieldRole, le_audioSampleRate);
+
+        lbl_audioBitRate = new QLabel(groupBox_3);
+        lbl_audioBitRate->setObjectName(QStringLiteral("lbl_audioBitRate"));
+
+        formLayout_3->setWidget(6, QFormLayout::LabelRole, lbl_audioBitRate);
+
+        le_audioBitRate = new QLineEdit(groupBox_3);
+        le_audioBitRate->setObjectName(QStringLiteral("le_audioBitRate"));
+
+        formLayout_3->setWidget(6, QFormLayout::FieldRole, le_audioBitRate);
+
+
+        gridLayout->addWidget(groupBox_3, 0, 2, 1, 1);
+
+        groupBox_4 = new QGroupBox(tab_moreinfo);
+        groupBox_4->setObjectName(QStringLiteral("groupBox_4"));
+        formLayout_4 = new QFormLayout(groupBox_4);
+        formLayout_4->setSpacing(6);
+        formLayout_4->setContentsMargins(11, 11, 11, 11);
+        formLayout_4->setObjectName(QStringLiteral("formLayout_4"));
+        label_23 = new QLabel(groupBox_4);
+        label_23->setObjectName(QStringLiteral("label_23"));
+
+        formLayout_4->setWidget(0, QFormLayout::LabelRole, label_23);
+
+        lineEdit_21 = new QLineEdit(groupBox_4);
+        lineEdit_21->setObjectName(QStringLiteral("lineEdit_21"));
+
+        formLayout_4->setWidget(0, QFormLayout::FieldRole, lineEdit_21);
+
+        label_24 = new QLabel(groupBox_4);
+        label_24->setObjectName(QStringLiteral("label_24"));
+
+        formLayout_4->setWidget(1, QFormLayout::LabelRole, label_24);
+
+        lineEdit_22 = new QLineEdit(groupBox_4);
+        lineEdit_22->setObjectName(QStringLiteral("lineEdit_22"));
+
+        formLayout_4->setWidget(1, QFormLayout::FieldRole, lineEdit_22);
+
+        label_25 = new QLabel(groupBox_4);
+        label_25->setObjectName(QStringLiteral("label_25"));
+
+        formLayout_4->setWidget(2, QFormLayout::LabelRole, label_25);
+
+        lineEdit_23 = new QLineEdit(groupBox_4);
+        lineEdit_23->setObjectName(QStringLiteral("lineEdit_23"));
+
+        formLayout_4->setWidget(2, QFormLayout::FieldRole, lineEdit_23);
+
+        label_26 = new QLabel(groupBox_4);
+        label_26->setObjectName(QStringLiteral("label_26"));
+
+        formLayout_4->setWidget(3, QFormLayout::LabelRole, label_26);
+
+        lineEdit_24 = new QLineEdit(groupBox_4);
+        lineEdit_24->setObjectName(QStringLiteral("lineEdit_24"));
+
+        formLayout_4->setWidget(3, QFormLayout::FieldRole, lineEdit_24);
+
+
+        gridLayout->addWidget(groupBox_4, 0, 3, 1, 1);
 
         tabWidget->addTab(tab_moreinfo, QString());
         tab_validation = new QWidget();
@@ -383,6 +520,11 @@ public:
 
         verticalLayout->addWidget(tabWidget);
 
+        btn_play = new QPushButton(centralWidget);
+        btn_play->setObjectName(QStringLiteral("btn_play"));
+
+        verticalLayout->addWidget(btn_play);
+
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -402,6 +544,17 @@ public:
         MainWindow->setStatusBar(statusBar);
 #ifndef QT_NO_SHORTCUT
         lbl_fileName->setBuddy(le_fileName);
+        lbl_duration->setBuddy(le_duration);
+        lbl_fileSize->setBuddy(le_file_size);
+        lbl_type->setBuddy(le_type);
+        lbl_priority->setBuddy(cb_priority);
+        lbl_quality->setBuddy(cb_quality);
+        lbl_progress->setBuddy(cb_progress);
+        lbl_audioCodec->setBuddy(le_audioCodec);
+        lbl_audioChannels->setBuddy(le_audioChannels);
+        lbl_audioBitDepth->setBuddy(le_audioBitDepth);
+        lbl_audioSampleRate->setBuddy(le_audioSampleRate);
+        lbl_audioBitRate->setBuddy(le_audioBitRate);
 #endif // QT_NO_SHORTCUT
 
         menuBar->addAction(menuFile->menuAction());
@@ -437,28 +590,53 @@ public:
         actionSet_All_Items_as_Done->setText(QApplication::translate("MainWindow", "Set All Items as Done", 0));
         lbl_fileName->setText(QApplication::translate("MainWindow", "File Name", 0));
         le_fileName->setText(QApplication::translate("MainWindow", "sdfdsfdsfsdf", 0));
-        groupBox->setTitle(QApplication::translate("MainWindow", "Technical Metadata", 0));
-        label_4->setText(QApplication::translate("MainWindow", "TextLabel", 0));
-        label_2->setText(QApplication::translate("MainWindow", "TextLabel", 0));
+        groupBox->setTitle(QApplication::translate("MainWindow", "General", 0));
+        lbl_duration->setText(QApplication::translate("MainWindow", "Duration:", 0));
+        lbl_fileSize->setText(QApplication::translate("MainWindow", "File Size:", 0));
         label_5->setText(QApplication::translate("MainWindow", "TextLabel", 0));
         label_6->setText(QApplication::translate("MainWindow", "TextLabel", 0));
         label_7->setText(QApplication::translate("MainWindow", "TextLabel", 0));
         label->setText(QApplication::translate("MainWindow", "TextLabel", 0));
         label_8->setText(QApplication::translate("MainWindow", "TextLabel", 0));
-        label_3->setText(QApplication::translate("MainWindow", "TextLabel", 0));
+        lbl_type->setText(QApplication::translate("MainWindow", "Type:", 0));
         groupBox_2->setTitle(QApplication::translate("MainWindow", "Other Data", 0));
-        label_9->setText(QApplication::translate("MainWindow", "TextLabel", 0));
-        label_10->setText(QApplication::translate("MainWindow", "TextLabel", 0));
+        lbl_priority->setText(QApplication::translate("MainWindow", "Priority", 0));
+        lbl_quality->setText(QApplication::translate("MainWindow", "Quality:", 0));
         label_11->setText(QApplication::translate("MainWindow", "TextLabel", 0));
         label_12->setText(QApplication::translate("MainWindow", "TextLabel", 0));
         label_13->setText(QApplication::translate("MainWindow", "TextLabel", 0));
         label_14->setText(QApplication::translate("MainWindow", "TextLabel", 0));
         label_15->setText(QApplication::translate("MainWindow", "TextLabel", 0));
-        label_16->setText(QApplication::translate("MainWindow", "TextLabel", 0));
+        lbl_progress->setText(QApplication::translate("MainWindow", "Progress:", 0));
+        cb_priority->clear();
+        cb_priority->insertItems(0, QStringList()
+         << QApplication::translate("MainWindow", "Low", 0)
+         << QApplication::translate("MainWindow", "Normal", 0)
+         << QApplication::translate("MainWindow", "High", 0)
+        );
+        cb_priority->setCurrentText(QApplication::translate("MainWindow", "Low", 0));
+        cb_quality->clear();
+        cb_quality->insertItems(0, QStringList()
+         << QApplication::translate("MainWindow", "Unknown", 0)
+         << QApplication::translate("MainWindow", "Passed", 0)
+         << QApplication::translate("MainWindow", "Failed", 0)
+        );
+        groupBox_3->setTitle(QApplication::translate("MainWindow", "Audio Metadata", 0));
+        lbl_audioCodec->setText(QApplication::translate("MainWindow", "Codec", 0));
+        lbl_audioChannels->setText(QApplication::translate("MainWindow", "Channels", 0));
+        lbl_audioBitDepth->setText(QApplication::translate("MainWindow", "Bit Depth", 0));
+        lbl_audioSampleRate->setText(QApplication::translate("MainWindow", "Sample Rate", 0));
+        lbl_audioBitRate->setText(QApplication::translate("MainWindow", "Bit Rate", 0));
+        groupBox_4->setTitle(QApplication::translate("MainWindow", "Video Metadata", 0));
+        label_23->setText(QApplication::translate("MainWindow", "Codec", 0));
+        label_24->setText(QApplication::translate("MainWindow", "Color Space", 0));
+        label_25->setText(QApplication::translate("MainWindow", "Chroma Subsample", 0));
+        label_26->setText(QApplication::translate("MainWindow", "Bit rate", 0));
         tabWidget->setTabText(tabWidget->indexOf(tab_moreinfo), QApplication::translate("MainWindow", "More Information", 0));
         label_17->setText(QApplication::translate("MainWindow", "Put something here", 0));
         tabWidget->setTabText(tabWidget->indexOf(tab_validation), QApplication::translate("MainWindow", "Validation", 0));
         tabWidget->setTabText(tabWidget->indexOf(tab_comments), QApplication::translate("MainWindow", "Comments", 0));
+        btn_play->setText(QApplication::translate("MainWindow", "Play", 0));
         menuFile->setTitle(QApplication::translate("MainWindow", "File", 0));
         menuHelp->setTitle(QApplication::translate("MainWindow", "Help", 0));
     } // retranslateUi

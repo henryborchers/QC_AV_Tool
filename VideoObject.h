@@ -10,10 +10,7 @@
 
 
 class VideoObject : public AudioObject {
-public:
-    VideoObject(const std::string &filename);
-    const std::string &getVideoCodec();
-    const std::string &getColorSpace();
+
 private:
     std::string videoCodec;
     std::string colorSpace;
@@ -25,7 +22,20 @@ private:
     int resolutionY;
     bool progressive;
     bool videoCodecLossy;
-    bool hasAudio;
+    bool hasSoundTrack;
+
+public:
+    VideoObject(const std::string &filename);
+    const std::string &getVideoCodec();
+    const std::string &getColorSpace();
+    const std::string &getChromaSubsampling();
+    int getVideoBitRate();
+    int getVideoColorDepth();
+    float getFrameRate();
+    int getResolutionX();
+    int getResolutionY();
+    bool isProgressive();
+    bool isVideoCodecLossy();
 };
 
 
