@@ -2,8 +2,8 @@
 // Created by Henry on 7/8/2015.
 //
 
-#ifndef PLAYER2_H
-#define PLAYER2_H
+#ifndef FFMPEG_MESSING_AROUND_PLAYER2_H
+#define FFMPEG_MESSING_AROUND_PLAYER2_H
 extern "C" {
 #include <libavformat/avformat.h>
 #include <libavcodec/avcodec.h>

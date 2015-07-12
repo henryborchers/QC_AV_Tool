@@ -12,7 +12,7 @@ extern "C"{
 }
 
 // Constants
-const Version _playerVersion = {2, 0, 0};
+const Version _playerVersion = {2, 1, 0};
 const Version _avcodecVersion = {LIBAVCODEC_VERSION_MAJOR,
                                  LIBAVCODEC_VERSION_MINOR,
                                  LIBAVCODEC_VERSION_MICRO};
@@ -54,7 +54,7 @@ SDL_mutex       *window_mutex;
 int             quit = 0;
 PacketQueue     audioq;
 SDL_AudioDeviceID   dev;
-SwrContext      *swr;
+SwrContext      *swr = nullptr;
 
 const Version &avcodecVersion() {
     return _avcodecVersion;
@@ -135,8 +135,10 @@ static int packet_queue_get(PacketQueue *q, AVPacket *pkt, int block) {
     return ret;
 }
 
+
+
 bool ffmpeg_player2(const char fileName[]) {
-//    printf("ffmpeg_threads with %s\n",fileName);
+
     SDL_Event   event;
     VideoState  *is = (VideoState*)av_mallocz(sizeof(VideoState));
     AVFormatContext *inputFmtCtx = nullptr;
@@ -369,10 +371,16 @@ int stream_component_open(VideoState *is, int stream_index) {
         wanted_spec.callback = audio_callback2;
         wanted_spec.userdata = is;
 
-        if(SDL_OpenAudio(&wanted_spec, &spec) < 0) {
-            fprintf(stderr, "SDL_OpenAudio error: %s\n", SDL_GetError());
+        dev = SDL_OpenAudioDevice(NULL, 0, &wanted_spec, &spec, SDL_AUDIO_ALLOW_FORMAT_CHANGE);
+        if(dev == 0){
+            fprintf(stderr, "SDL_OpenAudioDevice error: %s\n", SDL_GetError());
             return -1;
+
         }
+//        if(SDL_OpenAudio(&wanted_spec, &spec) < 0) {
+//            fprintf(stderr, "SDL_OpenAudio error: %s\n", SDL_GetError());
+//            return -1;
+//        }
     }
 
     codec = avcodec_find_decoder(codecCtx->codec_id);
@@ -382,11 +390,14 @@ int stream_component_open(VideoState *is, int stream_index) {
     }
     if(codecCtx->sample_fmt == AV_SAMPLE_FMT_FLTP) {
         puts("Special case 2");
-        //FIXME
-//        swr = swr_alloc();
+        swr = swr_alloc();
         av_opt_set_int(swr, "in_channel_layout", codecCtx->channel_layout, 0);
         av_opt_set_int(swr, "out_channel_layout", codecCtx->channel_layout, 0);
-//        av_opt_set_int(swr, "out_channel_layout", codecCtx->channel_layout, 0);
+        av_opt_set_int(swr, "in_sample_rate", codecCtx->sample_rate, 0);
+        av_opt_set_int(swr, "out_sample_rate", codecCtx->sample_rate, 0);
+        av_opt_set_int(swr, "in_sample_fmt", AV_SAMPLE_FMT_FLTP, 0);
+        av_opt_set_int(swr, "out_sample_fmt", AV_SAMPLE_FMT_S16, 0);
+        swr_init(swr);
 
 //            codecCtx->request_sample_fmt=AV_SAMPLE_FMT_FLT;
     }
@@ -400,7 +411,8 @@ int stream_component_open(VideoState *is, int stream_index) {
             is->audio_buf_index = 0;
             memset(&is->audio_pkt, 0, sizeof(is->audio_pkt));
             packet_queue_init(&is->audioq);
-            SDL_PauseAudio(0);
+//            SDL_PauseAudio(0);
+            SDL_PauseAudioDevice(dev, 0);
             break;
         case AVMEDIA_TYPE_VIDEO:
             is->videoStream = stream_index;
@@ -672,10 +684,17 @@ void audio_callback2(void *userdata, Uint8 *stream, int len) {
     VideoState *is = (VideoState *) userdata;
     int len1;
     int audio_size;
+    uint8_t *resampleBuffer = nullptr;
 
     while(len > 0) {
         if(is->audio_buf_index >= is->audio_buf_size){
+
             audio_size = audio_decode_frame1(is);
+//            if(swr_convert(swr, &resampleBuffer, is->audio_frame.nb_samples, (const uint8_t **)(is->audio_frame.extended_data), is->audio_frame.nb_samples) <0) {
+//                fprintf(stderr, "Failed to convert audio frame");
+//                exit(-1);
+//            };
+//            swr_convert_frame()
             if (audio_size < 0) {
                 is->audio_buf_size = 1024;
                 memset(is->audio_buf, 0, is->audio_buf_size);
@@ -707,22 +726,38 @@ int audio_decode_frame1(VideoState *is) {
         while(is->audio_pkt_size > 0){
             int got_frame = 0;
 
-
             len1 = avcodec_decode_audio4(is->audio_st->codec, &is->audio_frame, &got_frame, pkt);
             if(len1<0) {
                 is->audio_pkt_size = 0;
                 break;
             }
+
             data_size = 0;
             if(got_frame){
+                AVFrame *decoded = av_frame_alloc();
+                decoded->sample_rate = is->audio_frame.sample_rate;
+                decoded->channel_layout = is->audio_frame.channel_layout;
+                decoded->format = AV_SAMPLE_FMT_S16;
+                decoded->nb_samples = is->audio_frame.nb_samples;
+                if(swr_convert_frame(swr, decoded, &is->audio_frame)!= 0){
+                    fprintf(stderr, "Failed to convert audio frame");
+                    exit(-1);
+                };
+//                data_size = av_samples_get_buffer_size(NULL,
+//                                                       is->audio_st->codec->channels,
+//                                                       is->audio_frame.nb_samples,
+//                                                       is->audio_st->codec->sample_fmt,
+//                                                       1);
                 data_size = av_samples_get_buffer_size(NULL,
-                                                       is->audio_st->codec->channels,
-                                                       is->audio_frame.nb_samples,
-                                                       is->audio_st->codec->sample_fmt,
+                                                       decoded->channels,
+                                                       decoded->nb_samples,
+                                                       AV_SAMPLE_FMT_S16,
                                                        1);
 //                printf("Buffer size: %d\n"
 //                               "timestamp: %d\n",data_size, is->audio_frame.best_effort_timestamp);
-                memcpy(is->audio_buf, is->audio_frame.data[0], data_size);
+                memcpy(is->audio_buf, decoded->data[0], data_size);
+//                memcpy(is->audio_buf, is->audio_frame.data[0], data_size);
+                av_frame_free(&decoded);
             }
             is->audio_pkt_data += len1;
             is->audio_pkt_size -= len1;
